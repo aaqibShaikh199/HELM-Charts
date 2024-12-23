@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.python_config.name }}
+  labels:
+    app: {{ .Values.python_config.label }}
+data:
+  DB_HOST: "{{ .Values.python_config.host }}"
+  DB_PORT: "{{ .Values.python_config.port }}"
+  DB_NAME: "{{ .Values.python_config.db_name }}"

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.mysql_deployment.name }}
+  labels:
+    app: {{ .Values.mysql_deployment.name }}
+spec:
+  replicas: {{ .Values.mysql_deployment.replica }}
+  selector:
+    matchLabels:
+      app: {{ .Values.mysql_deployment.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.mysql_deployment.name }}
+    spec:
+      containers:
+        - name: {{ .Values.mysql_deployment.name }}
+          image: {{ .Values.mysql_deployment.image }}
+          ports:
+            - containerPort: {{ .Values.mysql_deployment.port }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.mysql_deployment.secretRef }}
