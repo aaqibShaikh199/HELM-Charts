@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.environment.name }}
+  labels:
+    app: {{ .Values.environment.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.environment.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.environment.name }}
+    spec:
+      containers:
+        - name: {{ .Values.environment.name }}
+          image: 
+            {{- if eq .Values.environment.env "prod" }}
+            aaqibshaikh199/conditional-statement:production
+            {{- else if eq .Values.environment.env "staging" }}
+            aaqibshaikh199/conditional-statement:staging
+            {{- else }}
+            aaqibshaikh199/conditional-statement:testing
+            {{- end }}
